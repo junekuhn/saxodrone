@@ -1,9 +1,11 @@
-toggle background full width button
-debug 404 error
-implement hydra code
 style header/footer
-about content
-embeds
+on resize
+
+splash
+   swap out hydra code through html events
+   update state with events
+   update assign css for each state
+   app.model or app.use
 
 
 nav

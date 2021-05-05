@@ -2,16 +2,20 @@
 var choo = require("choo");
 var html = require("choo/html");
 var main = require("./main.js");
-var contact = require("./contact")
 var assert = require("assert");
 // initialize choo
 var app = choo({ hash: true });
 
 //create a store
 app.use((state, emitter) => {
-  state.overlay = true
-  state.count = 0
-  state.premiere = false                         // 1.
+  state.splash = {
+
+  }
+  
+  //methods
+  // skip
+  // play
+  // ended
 
   emitter.on('DOMContentLoaded', () => {   // 2.
     emitter.on('increment', (num) => {     // 3.
@@ -81,24 +85,7 @@ function notFound() {
 
 
 app.route("/", main);
-
-const fund = function (state, emit) {
-  return html``;
-}
-
-const listen = function (state, emit) {
-  return html``;
-}
-
-const watch = function (state, emit) {
-  return html``;
-}
-
-
-app.route("/contact", contact);
-app.route("/listen", listen);
-app.route("/watch", watch);
-app.route("/fund", fund);
+app.route("/:content", main);
 
 
 // start app

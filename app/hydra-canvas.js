@@ -20,8 +20,8 @@ module.exports = class Map extends Component {
     // create a new hydra-synth instance
     if (isMobile == false) {
       const hydraCanvas = this.canvas;
-      hydraCanvas.width = window.innerHeight;
-      hydraCanvas.height = 300;
+      hydraCanvas.width = window.innerWidth;
+      hydraCanvas.height = window.innerHeight;
 
       // create canvas for drawing text
       const canvas = document.createElement("canvas");
@@ -42,41 +42,18 @@ module.exports = class Map extends Component {
 
       //let main = { scrollTop: 0}
 
-      const ctx = canvas.getContext("2d");
-      ctx.font = "80px Helvetica";
-      ctx.fillText("hydra meetup #2", 10, 100);
-      s0.init({ src: canvas });
+        osc(5, 0.01, 0.1)
+          .mult(voronoi(2.5,0.05, 0.1).color(0.5, 0.3, 0.1),1)
+          .contrast(0.7)
+          .out(o1)
 
-      src(o0)
-        .layer(
-          osc(10, 0.1, 2)
-            .modulate(noise(3))
-            .rotate(0, 0.2)
-            // .luma(() => 1 - mouse.x/width)
-            .luma([0.2, 0.5].smooth(1))
-        )
-        //.layer(src(s0).invert())
-        .layer(
-          src(s0)
-            .invert()
-            .mult(
-              osc(2, 0.01, 0)
-                .color(2, 1, 1)
-                .hue(() => time)
-            )
-            .scale(() => {
-              const main = document.getElementsByClassName("main")[0];
-              return main ? 1 - main.scrollTop / 400 : 1;
-            })
-            .modulate(noise(3, 0.1), () => {
-              let t = Math.max(0, Math.sin(time * 0.5));
-              return t * t * 0.1;
-            })
-        )
-        .scrollY(-0.005)
-        .scale(0.99)
-        //.mask(shape(4, 0.8, 0.2).scrollY(-0.1))
-        .out();
+        
+        src(o0)
+          .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
+          .mask(shape(4, 0.25, 0.1).scale(5,0.1).scrollX(0.5)))
+          .modulateScale(o1 , [0.003, 0.19].smooth(), 0.99)
+          .modulate(noise(), 0.001)
+          .out(o0)
 
       // //window.hasRun = true
     }

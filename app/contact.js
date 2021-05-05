@@ -5,7 +5,6 @@ module.exports = function(state, emit) {
 
   return html`
   <div>
-      ${header()}
       <form id="contact-form" action="/contact">
         <label for="yourname">
           Your Name
@@ -14,10 +13,10 @@ module.exports = function(state, emit) {
           type="text"
           required
           pattern=".{1,64}"
-          title="Your name must be between 1 and 64 characters long."
+          title="Must be between 1 and 64 characters long."
         >
         <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" cols="20" placeholder="">What's Up?</textarea>
+        <textarea id="message" name="message" rows="5" cols="20" placeholder="" required>What's Up?</textarea>
         <button id="contact-button" onclick=${ () => emit('submitform')} type="button" name="contact-button">Submit</button>
         
       </form>

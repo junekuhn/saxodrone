@@ -5,7 +5,7 @@ html, body {
    padding: 0px;
    font-family: garamond;
    color: #eee;
-   background-color: #222;
+   background-color: rgba(0.1, 0.1, 0.1, 0);
 
 }
 
@@ -40,6 +40,7 @@ a:visited {
    position: fixed;
    top: 0;
    right: 0;
-   transform-origin: top left;
-   transform: translateX(100%) rotate(90deg);
+   z-index: -1;
+   /* transform-origin: top left;
+   transform: translateX(100%) rotate(90deg); */
 }

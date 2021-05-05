@@ -5,6 +5,7 @@ module.exports = function (state, emit) {
       <header>
          <nav>
             <a href="/">Home</a>
+            <a href="/about">About</a>
             <a href="/contact">Contact</a>
             <a href="/listen">Listen</a>
             <a href="/watch">Watch</a>
