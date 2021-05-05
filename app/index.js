@@ -1,10 +1,55 @@
 // import choo
 var choo = require("choo");
 var html = require("choo/html");
+var main = require("./main.js");
+var contact = require("./contact")
+var assert = require("assert");
 // initialize choo
 var app = choo({ hash: true });
 
-app.route("/*", notFound);
+//create a store
+app.use((state, emitter) => {
+  state.overlay = true
+  state.count = 0
+  state.premiere = false                         // 1.
+
+  emitter.on('DOMContentLoaded', () => {   // 2.
+    emitter.on('increment', (num) => {     // 3.
+      state.count += num                   // 4.
+      emitter.emit('render')               // 5.
+    })
+  })
+
+  emitter.on('beginPremiere', () => {
+    //play sound and animation
+    state.overlay = false;
+    state.premiere = true;
+  })
+
+  emitter.on('endPremiere', () => {
+    state.premiere = false;
+  })
+
+  emitter.on('skip', () => {
+    //just load the homepage
+  })
+
+  
+  //triggered anytime the submitform event is emitted
+  emitter.on('submitform', (submission) => {                   // 2.
+    console.log('form submitted')
+    // validate type
+    assert.strictEqual(typeof submission, 'string');
+    //clear form
+    //render
+    emitter.emit('render');
+  })
+
+})
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(require('choo-devtools')())
+}
 
 // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
 const mobileCheck = function() {
@@ -37,6 +82,24 @@ function notFound() {
 
 app.route("/", main);
 
+const fund = function (state, emit) {
+  return html``;
+}
+
+const listen = function (state, emit) {
+  return html``;
+}
+
+const watch = function (state, emit) {
+  return html``;
+}
+
+
+app.route("/contact", contact);
+app.route("/listen", listen);
+app.route("/watch", watch);
+app.route("/fund", fund);
+
 
 // start app
-app.mount("#choomount");
+app.mount('#choomount');

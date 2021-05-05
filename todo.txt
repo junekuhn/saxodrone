@@ -1,0 +1,26 @@
+toggle background full width button
+debug 404 error
+implement hydra code
+style header/footer
+about content
+embeds
+
+
+nav
+   about
+      bio
+      purpose
+   blog (tbd)
+   shows (tbd)
+   contact
+      form
+   listen
+      bandcamp embeds
+   watch
+      youtube embeds
+   store (tbd)
+   fund (this website/saxodrone/interactive stuff)
+      what my plans are
+      what you get for contributing
+      maybe a form or a poll to give input
+      paypal/venmo/buymeacoffee

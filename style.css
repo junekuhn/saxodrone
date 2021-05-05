@@ -1,0 +1,45 @@
+html, body {
+   width: 100%;
+   height: 100%;
+   margin: 0px;
+   padding: 0px;
+   font-family: garamond;
+   color: #eee;
+   background-color: #222;
+
+}
+
+h1 {
+
+}
+
+h3 {
+
+}
+
+a:link {
+   color: #208
+
+}
+
+a:visited {
+   color: #e90
+}
+
+#hydra-canvas {
+   /*   width: 100%;
+  height: 100%;
+  position: fixed; */
+   width: fit-content;
+   height: fit-content;
+}
+
+#hydra-holder {
+   display: inline-block;
+   color: white;
+   position: fixed;
+   top: 0;
+   right: 0;
+   transform-origin: top left;
+   transform: translateX(100%) rotate(90deg);
+}
