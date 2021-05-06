@@ -41,22 +41,30 @@ module.exports = class Map extends Component {
       }
 
       //let main = { scrollTop: 0}
-
-        osc(5, 0.01, 0.1)
-          .mult(voronoi(2.5,0.05, 0.1).color(0.5, 0.3, 0.1),1)
-          .contrast(0.7)
-          .out(o1)
+      switch (this.state.hydraFunction) {
+        case "osc":
+          osc().out();
+          break;
+      
+        default:
+          osc(5, 0.01, 0.1)
+            .mult(voronoi(2.5, 0.05, 0.1).color(0.5, 0.3, 0.1), 1)
+            .contrast(0.7)
+            .out(o1)
 
         
-        src(o0)
-          .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
-          .mask(shape(4, 0.25, 0.1).scale(5,0.1).scrollX(0.5)))
-          .modulateScale(o1 , [0.003, 0.19].smooth(), 0.99)
-          .modulate(noise(), 0.001)
-          .out(o0)
+          src(o0)
+            .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
+              .mask(shape(4, 0.25, 0.1).scale(5, 0.1).scrollX(0.5)))
+            .modulateScale(o1, [0.003, 0.19].smooth(), 0.99)
+            .modulate(noise(), 0.001)
+            .out(o0)
+          break;
+      }
 
       // //window.hasRun = true
     }
+
   }
 
   update() {
@@ -72,6 +80,14 @@ module.exports = class Map extends Component {
     } else {
       this.canvas = this.state.canvas;
     }
+
+    window.addEventListener("resize", () => {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+      // console.log(this.canvas)
+    });
+
+
     return html`
       <div id="hydra-holder">
         ${this.canvas}

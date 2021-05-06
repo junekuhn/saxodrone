@@ -11,7 +11,7 @@ var fund = require('./fund')
 
 module.exports = function (state, emit) {
 
-
+   console.log(state.route);
    return html`
    <div>
       ${header()}
@@ -24,7 +24,7 @@ module.exports = function (state, emit) {
       `
    
    function contentMap() {
-      switch (state.params.content) {
+      switch (state.params.wildcard) {
          case 'about':
             return about(state, emit);
          case 'contact':
@@ -51,8 +51,25 @@ const home = function (state, emit) {
 
    return html`
       <div>
-         <h1>home page</h1>
-         <!-- <img id="saxBell" src="bell.png" alt="saxophone bell"> -->
+         ${state.splash ? splash(state, emit) : noSplash(state, emit)}
       </div>
+   `
+}
+
+const splash = function (state, emit) {
+
+   //code that hides header and footer
+
+   return html`
+   <h1>Splash</h1>
+   <button onclick=${() => emit("play")}>Play</button>
+   <img id="saxBell" src="assets/DSC00038.png" alt="brown tenor saxophone">
+   <button onclick=${() => emit("skip")}>Skip</button>
+   `
+}
+
+const noSplash = function (state, emit) {
+   return html`
+    <h1>home page</h1>
    `
 }

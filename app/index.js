@@ -3,42 +3,29 @@ var choo = require("choo");
 var html = require("choo/html");
 var main = require("./main.js");
 var assert = require("assert");
+var Hydra = require('./hydra-canvas.js');
+// const { emit } = require("process");
 // initialize choo
 var app = choo({ hash: true });
 
 //create a store
 app.use((state, emitter) => {
-  state.splash = {
-
-  }
+  state.hydraFunction = 'default';
   
   //methods
   // skip
   // play
   // ended
 
-  emitter.on('DOMContentLoaded', () => {   // 2.
-    emitter.on('increment', (num) => {     // 3.
-      state.count += num                   // 4.
-      emitter.emit('render')               // 5.
+  emitter.on('DOMContentLoaded', () => {  
+    emitter.on('changeHydra', (data) => {    
+      state.hydraFunction = data
+      state.cache(Hydra, 'my-hydra').load();
     })
   })
-
-  emitter.on('beginPremiere', () => {
-    //play sound and animation
-    state.overlay = false;
-    state.premiere = true;
-  })
-
-  emitter.on('endPremiere', () => {
-    state.premiere = false;
-  })
-
-  emitter.on('skip', () => {
-    //just load the homepage
-  })
-
   
+  // choo.emit('changeHydra', 'osc')
+// 
   //triggered anytime the submitform event is emitted
   emitter.on('submitform', (submission) => {                   // 2.
     console.log('form submitted')
@@ -47,6 +34,18 @@ app.use((state, emitter) => {
     //clear form
     //render
     emitter.emit('render');
+  })
+
+})
+
+app.use((state, emitter) => {
+  state.splash = true;
+
+  emitter.on('DOMContentLoaded', () => {
+      emitter.on("skip", () => {
+        state.splash = false;
+        emitter.emit('render');
+      })
   })
 
 })
@@ -73,7 +72,7 @@ const mobileCheck = function() {
 };
 app.state.isMobile = mobileCheck();
 
-function notFound() {
+function notFound(state, emit) {
   return html`
     <div>
       <a href="https://saxodr.one">
@@ -85,7 +84,7 @@ function notFound() {
 
 
 app.route("/", main);
-app.route("/:content", main);
+app.route("*", main);
 
 
 // start app

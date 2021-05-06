@@ -8,6 +8,7 @@ module.exports = function (state, emit) {
       <div>
       <section>
          <h1>About</h1>
+         <img src="assets/closeup.png" alt="close-up on Cannonball tenor sax">
          <p>It's really about the journey. Sound transports the mind to a place where it had never been before. From myself as the performer, to you, the listener, the connection music creates is not one that can be easily broken.</p>
          <br>
          <p>The saxophone, like any wind instrument, is controlled by the breath.  And with digital effects that breath comes to life. </p>
@@ -155,22 +156,30 @@ module.exports = class Map extends Component {
       }
 
       //let main = { scrollTop: 0}
-
-        osc(5, 0.01, 0.1)
-          .mult(voronoi(2.5,0.05, 0.1).color(0.5, 0.3, 0.1),1)
-          .contrast(0.7)
-          .out(o1)
+      switch (this.state.hydraFunction) {
+        case "osc":
+          osc().out();
+          break;
+      
+        default:
+          osc(5, 0.01, 0.1)
+            .mult(voronoi(2.5, 0.05, 0.1).color(0.5, 0.3, 0.1), 1)
+            .contrast(0.7)
+            .out(o1)
 
         
-        src(o0)
-          .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
-          .mask(shape(4, 0.25, 0.1).scale(5,0.1).scrollX(0.5)))
-          .modulateScale(o1 , [0.003, 0.19].smooth(), 0.99)
-          .modulate(noise(), 0.001)
-          .out(o0)
+          src(o0)
+            .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
+              .mask(shape(4, 0.25, 0.1).scale(5, 0.1).scrollX(0.5)))
+            .modulateScale(o1, [0.003, 0.19].smooth(), 0.99)
+            .modulate(noise(), 0.001)
+            .out(o0)
+          break;
+      }
 
       // //window.hasRun = true
     }
+
   }
 
   update() {
@@ -186,6 +195,14 @@ module.exports = class Map extends Component {
     } else {
       this.canvas = this.state.canvas;
     }
+
+    window.addEventListener("resize", () => {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+      // console.log(this.canvas)
+    });
+
+
     return html`
       <div id="hydra-holder">
         ${this.canvas}
@@ -201,42 +218,29 @@ var choo = require("choo");
 var html = require("choo/html");
 var main = require("./main.js");
 var assert = require("assert");
+var Hydra = require('./hydra-canvas.js');
+// const { emit } = require("process");
 // initialize choo
 var app = choo({ hash: true });
 
 //create a store
 app.use((state, emitter) => {
-  state.splash = {
-
-  }
+  state.hydraFunction = 'default';
   
   //methods
   // skip
   // play
   // ended
 
-  emitter.on('DOMContentLoaded', () => {   // 2.
-    emitter.on('increment', (num) => {     // 3.
-      state.count += num                   // 4.
-      emitter.emit('render')               // 5.
+  emitter.on('DOMContentLoaded', () => {  
+    emitter.on('changeHydra', (data) => {    
+      state.hydraFunction = data
+      state.cache(Hydra, 'my-hydra').load();
     })
   })
-
-  emitter.on('beginPremiere', () => {
-    //play sound and animation
-    state.overlay = false;
-    state.premiere = true;
-  })
-
-  emitter.on('endPremiere', () => {
-    state.premiere = false;
-  })
-
-  emitter.on('skip', () => {
-    //just load the homepage
-  })
-
   
+  // choo.emit('changeHydra', 'osc')
+// 
   //triggered anytime the submitform event is emitted
   emitter.on('submitform', (submission) => {                   // 2.
     console.log('form submitted')
@@ -245,6 +249,18 @@ app.use((state, emitter) => {
     //clear form
     //render
     emitter.emit('render');
+  })
+
+})
+
+app.use((state, emitter) => {
+  state.splash = true;
+
+  emitter.on('DOMContentLoaded', () => {
+      emitter.on("skip", () => {
+        state.splash = false;
+        emitter.emit('render');
+      })
   })
 
 })
@@ -271,7 +287,7 @@ const mobileCheck = function() {
 };
 app.state.isMobile = mobileCheck();
 
-function notFound() {
+function notFound(state, emit) {
   return html`
     <div>
       <a href="https://saxodr.one">
@@ -283,14 +299,14 @@ function notFound() {
 
 
 app.route("/", main);
-app.route("/:content", main);
+app.route("*", main);
 
 
 // start app
 app.mount('#choomount');
 
 }).call(this)}).call(this,require('_process'))
-},{"./main.js":9,"_process":91,"assert":11,"choo":32,"choo-devtools":19,"choo/html":31}],8:[function(require,module,exports){
+},{"./hydra-canvas.js":6,"./main.js":9,"_process":91,"assert":11,"choo":32,"choo-devtools":19,"choo/html":31}],8:[function(require,module,exports){
 html = require("choo/html")
 
 module.exports = function (state, emit) {
@@ -318,7 +334,7 @@ var fund = require('./fund')
 
 module.exports = function (state, emit) {
 
-
+   console.log(state.route);
    return html`
    <div>
       ${header()}
@@ -331,7 +347,7 @@ module.exports = function (state, emit) {
       `
    
    function contentMap() {
-      switch (state.params.content) {
+      switch (state.params.wildcard) {
          case 'about':
             return about(state, emit);
          case 'contact':
@@ -358,9 +374,26 @@ const home = function (state, emit) {
 
    return html`
       <div>
-         <h1>home page</h1>
-         <!-- <img id="saxBell" src="bell.png" alt="saxophone bell"> -->
+         ${state.splash ? splash(state, emit) : noSplash(state, emit)}
       </div>
+   `
+}
+
+const splash = function (state, emit) {
+
+   //code that hides header and footer
+
+   return html`
+   <h1>Splash</h1>
+   <button onclick=${() => emit("play")}>Play</button>
+   <img id="saxBell" src="assets/DSC00038.png" alt="brown tenor saxophone">
+   <button onclick=${() => emit("skip")}>Skip</button>
+   `
+}
+
+const noSplash = function (state, emit) {
+   return html`
+    <h1>home page</h1>
    `
 }
 },{"./about":1,"./contact":2,"./footer":3,"./fund":4,"./header":5,"./hydra-canvas.js":6,"./listen":8,"./watch":10,"choo/html":31}],10:[function(require,module,exports){
