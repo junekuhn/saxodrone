@@ -11,6 +11,7 @@ var fund = require('./fund')
 
 module.exports = function (state, emit) {
 
+
    return html`
    <div>
       ${header()}
@@ -25,17 +26,17 @@ module.exports = function (state, emit) {
    function contentMap() {
       switch (state.params.content) {
          case 'about':
-            return about();
+            return about(state, emit);
          case 'contact':
-            return contact();
+            return contact(state, emit);
          case 'fund':
-            return fund();
+            return fund(state, emit);
          case 'listen':
-            return listen();
+            return listen(state, emit);
          case 'watch':
-            return watch();
+            return watch(state, emit);
          case undefined:
-            return home();
+            return home(state, emit);
          default:
             console.log(state.params.content)
             return html`
@@ -46,9 +47,12 @@ module.exports = function (state, emit) {
 };
    
 const home = function (state, emit) {
+   emit('DOMTitleChange', 'Saxodrone')
+
    return html`
       <div>
          <h1>home page</h1>
+         <!-- <img id="saxBell" src="bell.png" alt="saxophone bell"> -->
       </div>
    `
 }

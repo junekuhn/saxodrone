@@ -1,6 +1,7 @@
 html = require("choo/html")
 
 module.exports = function (state, emit) {
+      emit('DOMTitleChange', 'Saxodrone | Watch')
    return html`
       <div>
       <section class=main-content>

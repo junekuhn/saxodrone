@@ -1,5 +1,7 @@
 style header/footer
 on resize
+favicon
+images
 
 splash
    swap out hydra code through html events

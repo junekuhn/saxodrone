@@ -1,7 +1,9 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 html = require("choo/html")
 
-module.exports = function () {
+module.exports = function (state, emit) {
+   emit('DOMTitleChange', 'Saxodrone | About')
+   
    return html`
       <div>
       <section>
@@ -16,11 +18,12 @@ module.exports = function () {
 html = require("choo/html");
 header = require("./header");
 
-module.exports = function(state, emit) {
+module.exports = function (state, emit) {
+     emit('DOMTitleChange', 'Saxodrone | Contact')
 
   return html`
   <div>
-      <form id="contact-form" action="/contact">
+      <form id="contact-form" action="https://formspree.io/f/xqkwendw" method="POST">
         <label for="yourname">
           Your Name
         </label>
@@ -32,12 +35,30 @@ module.exports = function(state, emit) {
         >
         <label for="message">Message</label>
         <textarea id="message" name="message" rows="5" cols="20" placeholder="" required>What's Up?</textarea>
-        <button id="contact-button" onclick=${ () => emit('submitform')} type="button" name="contact-button">Submit</button>
+        <button id="contact-button" type="submit" name="contact-button">Submit</button>
         
       </form>
   </div>
   `
+
+  
+  function onsubmit (e) {                                               // 1.
+    e.preventDefault()
+    var form = e.currentTarget
+    var data = new FormData(form)                                       // 2.
+    var headers = new Headers({ 'Content-Type': 'application/json' })   // 3.
+    var body = {}
+    for (var pair of data.entries()) body[pair[0]] = pair[1]            // 4.
+    body = JSON.stringify(body)                                         // 5.
+    fetch('/form/receiver', { method: 'POST', body, headers })              // 6.
+      .then(res => {
+        if (!res.ok) return console.log('oh no!')
+        console.log('request ok \o/')
+      })
+      .catch(err => console.log('oh no!'))
+  }
 }
+
 },{"./header":5,"choo/html":31}],3:[function(require,module,exports){
 html = require("choo/html")
 
@@ -54,7 +75,8 @@ module.exports = function (state, emit) {
 },{"choo/html":31}],4:[function(require,module,exports){
 html = require("choo/html")
 
-module.exports = function () {
+module.exports = function (state, emit) {
+      emit('DOMTitleChange', 'Saxodrone | Fund')
    return html`
       <div>
          <h1>Fund</h1>
@@ -271,7 +293,8 @@ app.mount('#choomount');
 },{"./main.js":9,"_process":91,"assert":11,"choo":32,"choo-devtools":19,"choo/html":31}],8:[function(require,module,exports){
 html = require("choo/html")
 
-module.exports = function () {
+module.exports = function (state, emit) {
+      emit('DOMTitleChange', 'Saxodrone | Listen')
    return html`
       <div>
       <section class="main-content">
@@ -295,6 +318,7 @@ var fund = require('./fund')
 
 module.exports = function (state, emit) {
 
+
    return html`
    <div>
       ${header()}
@@ -309,17 +333,17 @@ module.exports = function (state, emit) {
    function contentMap() {
       switch (state.params.content) {
          case 'about':
-            return about();
+            return about(state, emit);
          case 'contact':
-            return contact();
+            return contact(state, emit);
          case 'fund':
-            return fund();
+            return fund(state, emit);
          case 'listen':
-            return listen();
+            return listen(state, emit);
          case 'watch':
-            return watch();
+            return watch(state, emit);
          case undefined:
-            return home();
+            return home(state, emit);
          default:
             console.log(state.params.content)
             return html`
@@ -330,9 +354,12 @@ module.exports = function (state, emit) {
 };
    
 const home = function (state, emit) {
+   emit('DOMTitleChange', 'Saxodrone')
+
    return html`
       <div>
          <h1>home page</h1>
+         <!-- <img id="saxBell" src="bell.png" alt="saxophone bell"> -->
       </div>
    `
 }
@@ -340,6 +367,7 @@ const home = function (state, emit) {
 html = require("choo/html")
 
 module.exports = function (state, emit) {
+      emit('DOMTitleChange', 'Saxodrone | Watch')
    return html`
       <div>
       <section class=main-content>
