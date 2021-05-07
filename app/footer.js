@@ -1,8 +1,16 @@
 html = require("choo/html")
 
 module.exports = function (state, emit) {
+
+   var splash;
+   if (state.route == "/" && state.splash) {
+      splash = "none";
+   } else {
+      splash = "block";
+   }
+   
    return html`
-      <footer>
+      <footer style="display: ${splash}">
       hand-made with
       <a href="https://choo.io">choo, </a>
       <a href="https://ojack.xyz">hydra synth, </a>

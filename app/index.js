@@ -11,11 +11,6 @@ var app = choo({ hash: true });
 //create a store
 app.use((state, emitter) => {
   state.hydraFunction = 'default';
-  
-  //methods
-  // skip
-  // play
-  // ended
 
   emitter.on('DOMContentLoaded', () => {  
     emitter.on('changeHydra', (data) => {    
@@ -24,8 +19,6 @@ app.use((state, emitter) => {
     })
   })
   
-  // choo.emit('changeHydra', 'osc')
-// 
   //triggered anytime the submitform event is emitted
   emitter.on('submitform', (submission) => {                   // 2.
     console.log('form submitted')
@@ -42,13 +35,18 @@ app.use((state, emitter) => {
   state.splash = true;
 
   emitter.on('DOMContentLoaded', () => {
-      emitter.on("skip", () => {
-        state.splash = false;
-        emitter.emit('render');
-      })
-  })
+    emitter.on("skip", () => {
+      state.splash = false;
+      emitter.emit('render');
+    });
 
-})
+
+
+
+
+
+  });
+});
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())

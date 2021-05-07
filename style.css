@@ -9,6 +9,52 @@ html, body {
 
 }
 
+nav {
+   display: flex;
+   justify-content: space-around;
+   flex-wrap: wrap;
+   padding: 30px;
+}
+
+nav a:link, nav a:visited {
+  font-size: 20px;
+  font-family: "verdana";
+  color: #eee;
+  text-shadow: 3px 3px 10px black;
+  letter-spacing: 1.5px;
+  padding: 5px;
+  padding-top: 15px;
+  min-width: 75px;
+  text-decoration: none;
+}
+
+footer {
+   text-align: center;
+   font-size: 16px;
+   padding-top: 50px;
+   padding-bottom: 50px;
+}
+
+#saxBell {
+   position: absolute;
+   top: 10%;
+   left: 20%;
+   margin: 25% 0px 25% 0px;
+   width: 50%;
+   height: auto;
+   animation: slide 30s linear infinite;
+}
+
+@keyframes slide {
+   from {
+      transform: rotate(0deg);
+   }
+
+   to {
+      transform: rotate(360deg);
+   }
+}
+
 h1 {
 
 }
@@ -43,4 +89,8 @@ a:visited {
    z-index: -1;
    /* transform-origin: top left;
    transform: translateX(100%) rotate(90deg); */
+}
+
+.hide {
+   display: none;
 }

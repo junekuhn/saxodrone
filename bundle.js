@@ -64,8 +64,16 @@ module.exports = function (state, emit) {
 html = require("choo/html")
 
 module.exports = function (state, emit) {
+
+   var splash;
+   if (state.route == "/" && state.splash) {
+      splash = "none";
+   } else {
+      splash = "block";
+   }
+   
    return html`
-      <footer>
+      <footer style="display: ${splash}">
       hand-made with
       <a href="https://choo.io">choo, </a>
       <a href="https://ojack.xyz">hydra synth, </a>
@@ -99,8 +107,15 @@ module.exports = function (state, emit) {
 html = require('choo/html');
 
 module.exports = function (state, emit) {
+   var splash;
+   if (state.route == "/" && state.splash) {
+      splash = "none";
+   } else {
+      splash = "block";
+   }
+   
    return html`
-      <header>
+      <header style="display: ${splash}">
          <nav>
             <a href="/">Home</a>
             <a href="/about">About</a>
@@ -226,11 +241,6 @@ var app = choo({ hash: true });
 //create a store
 app.use((state, emitter) => {
   state.hydraFunction = 'default';
-  
-  //methods
-  // skip
-  // play
-  // ended
 
   emitter.on('DOMContentLoaded', () => {  
     emitter.on('changeHydra', (data) => {    
@@ -239,8 +249,6 @@ app.use((state, emitter) => {
     })
   })
   
-  // choo.emit('changeHydra', 'osc')
-// 
   //triggered anytime the submitform event is emitted
   emitter.on('submitform', (submission) => {                   // 2.
     console.log('form submitted')
@@ -257,13 +265,18 @@ app.use((state, emitter) => {
   state.splash = true;
 
   emitter.on('DOMContentLoaded', () => {
-      emitter.on("skip", () => {
-        state.splash = false;
-        emitter.emit('render');
-      })
-  })
+    emitter.on("skip", () => {
+      state.splash = false;
+      emitter.emit('render');
+    });
 
-})
+
+
+
+
+
+  });
+});
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-devtools')())
@@ -334,17 +347,20 @@ var fund = require('./fund')
 
 module.exports = function (state, emit) {
 
-   console.log(state.route);
-   return html`
+
+      return html`
    <div>
-      ${header()}
+      ${header(state, emit)}
       <div>
          ${state.cache(Hydra, 'my-hydra').render()}
       </div>
       ${contentMap()}
-      ${footer()}
+      ${footer(state, emit)}
    </div>
       `
+
+      
+   
    
    function contentMap() {
       switch (state.params.wildcard) {
@@ -381,21 +397,21 @@ const home = function (state, emit) {
 
 const splash = function (state, emit) {
 
-   //code that hides header and footer
-
    return html`
-   <h1>Splash</h1>
+   <div style="width: 100%; height: 25%"></div>
    <button onclick=${() => emit("play")}>Play</button>
-   <img id="saxBell" src="assets/DSC00038.png" alt="brown tenor saxophone">
+   <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
    <button onclick=${() => emit("skip")}>Skip</button>
+   <div style="width: 100%; height: 25%"></div>
    `
 }
 
 const noSplash = function (state, emit) {
+
    return html`
     <h1>home page</h1>
-   `
-}
+   `;
+};
 },{"./about":1,"./contact":2,"./footer":3,"./fund":4,"./header":5,"./hydra-canvas.js":6,"./listen":8,"./watch":10,"choo/html":31}],10:[function(require,module,exports){
 html = require("choo/html")
 

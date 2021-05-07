@@ -11,17 +11,20 @@ var fund = require('./fund')
 
 module.exports = function (state, emit) {
 
-   console.log(state.route);
-   return html`
+
+      return html`
    <div>
-      ${header()}
+      ${header(state, emit)}
       <div>
          ${state.cache(Hydra, 'my-hydra').render()}
       </div>
       ${contentMap()}
-      ${footer()}
+      ${footer(state, emit)}
    </div>
       `
+
+      
+   
    
    function contentMap() {
       switch (state.params.wildcard) {
@@ -58,18 +61,18 @@ const home = function (state, emit) {
 
 const splash = function (state, emit) {
 
-   //code that hides header and footer
-
    return html`
-   <h1>Splash</h1>
+   <div style="width: 100%; height: 25%"></div>
    <button onclick=${() => emit("play")}>Play</button>
-   <img id="saxBell" src="assets/DSC00038.png" alt="brown tenor saxophone">
+   <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
    <button onclick=${() => emit("skip")}>Skip</button>
+   <div style="width: 100%; height: 25%"></div>
    `
 }
 
 const noSplash = function (state, emit) {
+
    return html`
     <h1>home page</h1>
-   `
-}
+   `;
+};

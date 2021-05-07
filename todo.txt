@@ -1,4 +1,5 @@
 style header/footer
+parallax
 
 splash
    swap out hydra code through html events
