@@ -53,26 +53,34 @@ const home = function (state, emit) {
    emit('DOMTitleChange', 'Saxodrone')
 
    return html`
-      <div>
          ${state.splash ? splash(state, emit) : noSplash(state, emit)}
-      </div>
    `
 }
 
 const splash = function (state, emit) {
 
    return html`
-   <div style="width: 100%; height: 25%"></div>
-   <button onclick=${() => emit("play")}>Play</button>
-   <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
-   <button onclick=${() => emit("skip")}>Skip</button>
-   <div style="width: 100%; height: 25%"></div>
+   <div id="splash-container">
+      <button id="play" onclick=${() => emit("play")}>Play</button>
+      <div style="display: block"></div>
+      <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+      <button id="skip" onclick=${() => emit("skip")}>Skip</button>
+   </div>
    `
 }
 
 const noSplash = function (state, emit) {
 
    return html`
-    <h1>home page</h1>
+   <div id="home-container" >
+      <div class="content-container">
+         <h1>Saxodrone</h1>
+         <p>
+            <img id="full-sax" src="/assets/DSC00038.png">
+            paragraph text
+
+         </p>
+      </div>
+   </div>
    `;
 };
