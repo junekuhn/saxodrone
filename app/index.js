@@ -40,6 +40,17 @@ app.use((state, emitter) => {
       emitter.emit('render');
     });
 
+    emitter.on("play", () => {
+      const drone = document.getElementById("drone");
+      console.log(drone);
+      drone.addEventListener("canplay", e => {
+                console.log("canplay")
+        drone.play();
+
+      })
+      // emitter.emit('render')
+    })
+
 
 
 

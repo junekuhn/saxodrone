@@ -205,10 +205,11 @@ module.exports = class Map extends Component {
       if (this.state.hydra == undefined) {
         var hydra = new Hydra({
           canvas: this.canvas,
-          detectAudio: false
+          detectAudio: true
           //width: 400,
           //height: 400
         });
+        console.log(hydra.audio);
         this.state.hydra = hydra;
       } else {
         hydra = this.state.hydra;
@@ -316,6 +317,17 @@ app.use((state, emitter) => {
       state.splash = false;
       emitter.emit('render');
     });
+
+    emitter.on("play", () => {
+      const drone = document.getElementById("drone");
+      console.log(drone);
+      drone.addEventListener("canplay", e => {
+                console.log("canplay")
+        drone.play();
+
+      })
+      // emitter.emit('render')
+    })
 
 
 
@@ -453,8 +465,14 @@ const splash = function (state, emit) {
          <button id="play" onclick=${() => emit("play")}>Play</button>
          <div style="display: block"></div>
          <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+
       </div>
       <button id="skip" onclick=${() => emit("skip")}>Skip</button>
+       <audio id="drone"  crossorigin="anonymous" >
+          <source src="assets/demo1.mp3" type="audio/mp3">
+          <source src="assets/demo1.wav" type="audio/wav">
+          no support
+       </audio>
    </div>
    `
 }

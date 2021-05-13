@@ -68,8 +68,14 @@ const splash = function (state, emit) {
          <button id="play" onclick=${() => emit("play")}>Play</button>
          <div style="display: block"></div>
          <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+
       </div>
       <button id="skip" onclick=${() => emit("skip")}>Skip</button>
+       <audio id="drone"  crossorigin="anonymous" >
+          <source src="assets/demo1.mp3" type="audio/mp3">
+          <source src="assets/demo1.wav" type="audio/wav">
+          no support
+       </audio>
    </div>
    `
 }

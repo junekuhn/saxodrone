@@ -31,10 +31,11 @@ module.exports = class Map extends Component {
       if (this.state.hydra == undefined) {
         var hydra = new Hydra({
           canvas: this.canvas,
-          detectAudio: false
+          detectAudio: true
           //width: 400,
           //height: 400
         });
+        console.log(hydra.audio);
         this.state.hydra = hydra;
       } else {
         hydra = this.state.hydra;
