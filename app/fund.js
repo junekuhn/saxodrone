@@ -4,7 +4,7 @@ module.exports = function (state, emit) {
       emit('DOMTitleChange', 'Saxodrone | Fund')
    return html`
       <div>
-         <h1>Fund</h1>
+         <h1>FUND</h1>
          <section>
             <h2>What's in the works?</h2>
          </section>
@@ -13,6 +13,7 @@ module.exports = function (state, emit) {
          </section>
          <section>
             <h2>Contribute</h2>
+            <a href="https://www.buymeacoffee.com/justinkuhn">Buy Me a Coffee</a>
          </section>
          <section>
             <h2>Feedback</h2>

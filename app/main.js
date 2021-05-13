@@ -13,12 +13,15 @@ module.exports = function (state, emit) {
 
 
       return html`
-   <div>
+   <div id="wrapper">
+      <div id="main">
       ${header(state, emit)}
       <div>
          ${state.cache(Hydra, 'my-hydra').render()}
       </div>
       ${contentMap()}
+      </div>
+      <div style="display:block;"></div>
       ${footer(state, emit)}
    </div>
       `
@@ -61,9 +64,11 @@ const splash = function (state, emit) {
 
    return html`
    <div id="splash-container">
-      <button id="play" onclick=${() => emit("play")}>Play</button>
-      <div style="display: block"></div>
-      <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+      <div id="play-container">
+         <button id="play" onclick=${() => emit("play")}>Play</button>
+         <div style="display: block"></div>
+         <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+      </div>
       <button id="skip" onclick=${() => emit("skip")}>Skip</button>
    </div>
    `
@@ -74,12 +79,11 @@ const noSplash = function (state, emit) {
    return html`
    <div id="home-container" >
       <div class="content-container">
-         <h1>Saxodrone</h1>
-         <p>
-            <img id="full-sax" src="/assets/DSC00038.png">
-            paragraph text
-
-         </p>
+         <h1>SAXODRONE</h1>
+         <img id="horn" src="/assets/DSC00038.png">
+         <h3>
+         Based in Raleigh, North Carolina
+         </h3>
       </div>
    </div>
    `;

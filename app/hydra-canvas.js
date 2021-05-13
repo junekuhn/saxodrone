@@ -40,6 +40,8 @@ module.exports = class Map extends Component {
         hydra = this.state.hydra;
       }
 
+      // setResolution(1080,720);
+
       //let main = { scrollTop: 0}
       switch (this.state.hydraFunction) {
         case "osc":
@@ -47,6 +49,7 @@ module.exports = class Map extends Component {
           break;
       
         default:
+          
           osc(5, 0.01, 0.1)
             .mult(voronoi(2.5, 0.05, 0.1).color(0.5, 0.3, 0.1), 1)
             .contrast(0.7)

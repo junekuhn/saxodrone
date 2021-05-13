@@ -6,7 +6,9 @@ module.exports = function (state, emit) {
       <div>
       <section class=main-content>
          <h1>Watch</h1>
-         <iframe width="907" height="510" src="https://www.youtube.com/embed/nz_wTz62b2Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+         <div class="iframe-container">
+            <iframe width="700" height="400" src="https://www.youtube.com/embed/nz_wTz62b2Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+         </div>
       </section>
       </div>`
 }

@@ -6,12 +6,12 @@ module.exports = function (state, emit) {
    
    return html`
       <div>
-      <section>
-         <h1>About</h1>
-         <img src="assets/closeup.png" alt="close-up on Cannonball tenor sax">
-         <p>It's really about the journey. Sound transports the mind to a place where it had never been before. From myself as the performer, to you, the listener, the connection music creates is not one that can be easily broken.</p>
+      <section class="about">
+         <h1>ABOUT</h1>
+         <!-- <img src="assets/closeup.png" alt="close-up on Cannonball tenor sax"> -->
+         <p>This is the music that I play on a calm, Sunday afternoon, outside on my deck. The wind's blowing faintly, and every note echos between the trees. It's the music where I lose myself on a Wednesday evening, when no one's home and I can crank my Peavey to a deafening level. Drone loops have a spriritual pull for me, one that draws me and holds my attention until I awake.</p>
          <br>
-         <p>The saxophone, like any wind instrument, is controlled by the breath.  And with digital effects that breath comes to life. </p>
+         <p>The saxophone, like any wind instrument, is controlled by the breath.  I used to meditate all the time, focusing on my breath to center my attention from stress, anxiety, and frustration.  Playing Saxodrone feels similar, with every breath driving the flow of music.  </p>
       </section>
       </div>`
 }
@@ -24,20 +24,35 @@ module.exports = function (state, emit) {
 
   return html`
   <div>
+    <h1>CONTACT</h1>
       <form id="contact-form" action="https://formspree.io/f/xqkwendw" method="POST">
-        <label for="yourname">
-          Your Name
-        </label>
-        <input id="yourname" name="yourname"
-          type="text"
-          required
-          pattern=".{1,64}"
-          title="Must be between 1 and 64 characters long."
-        >
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" cols="20" placeholder="" required>What's Up?</textarea>
-        <button id="contact-button" type="submit" name="contact-button">Submit</button>
-        
+        <div class="form-div">
+          <label for="yourname">
+            Your Name
+          </label>
+          <input id="yourname" name="yourname"
+            type="text"
+            required
+            pattern=".{1,64}"
+            title="Must be between 1 and 64 characters long."
+          >
+        </div>
+        <div class="form-div">
+          <label for="yourname">
+            Your Email
+          </label>
+          <input id="youremail" name="youremail"
+            type="text"
+            required
+          >
+        </div>
+        <div class="form-div">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" cols="20" placeholder="" required>What's Up?</textarea>
+        </div>
+        <div class="form-div">              
+          <button id="contact-button" type="submit" name="contact-button">Submit</button>
+        </div>
       </form>
   </div>
   `
@@ -76,7 +91,7 @@ module.exports = function (state, emit) {
       <footer style="display: ${splash}">
       hand-made with
       <a href="https://choo.io">choo, </a>
-      <a href="https://ojack.xyz">hydra synth, </a>
+      <a href="https://hydra.ojack.xyz">hydra synth, </a>
       and a little bit of free jazz. Creative Commons 2021 <a href="https://justinkuhn.media">Justin Kuhn Media</a>, forkable on <a href="https://github.com/justinkuhn/saxodrone">Github.</a>
       </footer>
    `
@@ -88,7 +103,7 @@ module.exports = function (state, emit) {
       emit('DOMTitleChange', 'Saxodrone | Fund')
    return html`
       <div>
-         <h1>Fund</h1>
+         <h1>FUND</h1>
          <section>
             <h2>What's in the works?</h2>
          </section>
@@ -97,6 +112,7 @@ module.exports = function (state, emit) {
          </section>
          <section>
             <h2>Contribute</h2>
+            <a href="https://www.buymeacoffee.com/justinkuhn">Buy Me a Coffee</a>
          </section>
          <section>
             <h2>Feedback</h2>
@@ -105,29 +121,57 @@ module.exports = function (state, emit) {
 }
 },{"choo/html":31}],5:[function(require,module,exports){
 html = require('choo/html');
+raw = require('nanohtml/raw')
 
 module.exports = function (state, emit) {
    var splash;
+   
    if (state.route == "/" && state.splash) {
       splash = "none";
    } else {
       splash = "block";
+   }
+
+   const toggleMenu = function () {
+      let myNav = document.getElementById("myNav")
+      myNav.style.height = "100%";
+      myNav.style.width = "100%";
+   }
+
+   const closeNav = function () {
+       document.getElementById("myNav").style.height = "0%";
    }
    
    return html`
       <header style="display: ${splash}">
          <nav>
             <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-            <a href="/listen">Listen</a>
-            <a href="/watch">Watch</a>
-            <a href="/fund">Fund</a>
+                        <!-- hamburger menu -->
+            <a href="javascript:void(0);" class="icon" onclick=${() => toggleMenu()}>
+               <i class="fa fa-bars"></i>
+            </a>
+            <div id="myNav" class="overlay">
+               <!-- close button -->
+               <a href="javascript:void(0)" class="closebtn" onclick=${() => closeNav()}>x</a>
+               <div class="overlay-content">
+                  <a href="/">Home</a>
+                  <a href="/about">About</a>
+                  <a href="/contact">Contact</a>
+                  <a href="/listen">Listen</a>
+                  <a href="/watch">Watch</a>
+                  <a id="fund" href="https://www.buymeacoffee.com/justinkuhn" target="_blank">${raw('Fund -&gt;')}</a>
+               </div>
+               
+            </div>
+
          </nav>
       </header>
    `;
+
+
 }
-},{"choo/html":31}],6:[function(require,module,exports){
+
+},{"choo/html":31,"nanohtml/raw":73}],6:[function(require,module,exports){
 var html = require("choo/html");
 var Component = require("choo/component");
 const Hydra = require("hydra-synth");
@@ -170,6 +214,8 @@ module.exports = class Map extends Component {
         hydra = this.state.hydra;
       }
 
+      // setResolution(1080,720);
+
       //let main = { scrollTop: 0}
       switch (this.state.hydraFunction) {
         case "osc":
@@ -177,6 +223,7 @@ module.exports = class Map extends Component {
           break;
       
         default:
+          
           osc(5, 0.01, 0.1)
             .mult(voronoi(2.5, 0.05, 0.1).color(0.5, 0.3, 0.1), 1)
             .contrast(0.7)
@@ -319,7 +366,7 @@ app.route("*", main);
 app.mount('#choomount');
 
 }).call(this)}).call(this,require('_process'))
-},{"./hydra-canvas.js":6,"./main.js":9,"_process":91,"assert":11,"choo":32,"choo-devtools":19,"choo/html":31}],8:[function(require,module,exports){
+},{"./hydra-canvas.js":6,"./main.js":9,"_process":92,"assert":11,"choo":32,"choo-devtools":19,"choo/html":31}],8:[function(require,module,exports){
 html = require("choo/html")
 
 module.exports = function (state, emit) {
@@ -329,7 +376,9 @@ module.exports = function (state, emit) {
       <section class="main-content">
          <h1>Previous Projects</h1>
          <p>In a previous life, I played in a jazz-metal band called Megachrome.</p>
-         <iframe style="border: 0; width: 350px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=516790313/size=large/bgcol=ffffff/linkcol=e99708/transparent=true/" seamless><a href="https://megachrome.bandcamp.com/album/brackish-ep">Brackish EP by Megachrome</a></iframe>
+         <div class="iframe-container">
+             <iframe style="border: 0; width: 350px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=516790313/size=large/bgcol=ffffff/linkcol=e99708/transparent=true/" seamless><a href="https://megachrome.bandcamp.com/album/brackish-ep">Brackish EP by Megachrome</a></iframe>
+         </div>
       </section>
       </div>`
 }
@@ -349,12 +398,15 @@ module.exports = function (state, emit) {
 
 
       return html`
-   <div>
+   <div id="wrapper">
+      <div id="main">
       ${header(state, emit)}
       <div>
          ${state.cache(Hydra, 'my-hydra').render()}
       </div>
       ${contentMap()}
+      </div>
+      <div style="display:block;"></div>
       ${footer(state, emit)}
    </div>
       `
@@ -397,9 +449,11 @@ const splash = function (state, emit) {
 
    return html`
    <div id="splash-container">
-      <button id="play" onclick=${() => emit("play")}>Play</button>
-      <div style="display: block"></div>
-      <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+      <div id="play-container">
+         <button id="play" onclick=${() => emit("play")}>Play</button>
+         <div style="display: block"></div>
+         <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+      </div>
       <button id="skip" onclick=${() => emit("skip")}>Skip</button>
    </div>
    `
@@ -410,12 +464,11 @@ const noSplash = function (state, emit) {
    return html`
    <div id="home-container" >
       <div class="content-container">
-         <h1>Saxodrone</h1>
-         <p>
-            <img id="full-sax" src="/assets/DSC00038.png">
-            paragraph text
-
-         </p>
+         <h1>SAXODRONE</h1>
+         <img id="horn" src="/assets/DSC00038.png">
+         <h3>
+         Based in Raleigh, North Carolina
+         </h3>
       </div>
    </div>
    `;
@@ -429,7 +482,9 @@ module.exports = function (state, emit) {
       <div>
       <section class=main-content>
          <h1>Watch</h1>
-         <iframe width="907" height="510" src="https://www.youtube.com/embed/nz_wTz62b2Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+         <div class="iframe-container">
+            <iframe width="700" height="400" src="https://www.youtube.com/embed/nz_wTz62b2Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+         </div>
       </section>
       </div>`
 }
@@ -943,7 +998,7 @@ var objectKeys = Object.keys || function (obj) {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"object-assign":84,"util/":14}],12:[function(require,module,exports){
+},{"object-assign":85,"util/":14}],12:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1565,7 +1620,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":13,"_process":91,"inherits":12}],15:[function(require,module,exports){
+},{"./support/isBuffer":13,"_process":92,"inherits":12}],15:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -4051,7 +4106,7 @@ function expose (opts) {
   }
 }
 
-},{"./lib/copy":20,"./lib/debug":21,"./lib/help":22,"./lib/log":23,"./lib/logger":24,"./lib/perf":25,"./lib/storage":26,"events":17,"wayfarer/get-all-routes":99}],20:[function(require,module,exports){
+},{"./lib/copy":20,"./lib/debug":21,"./lib/help":22,"./lib/log":23,"./lib/logger":24,"./lib/perf":25,"./lib/storage":26,"events":17,"wayfarer/get-all-routes":100}],20:[function(require,module,exports){
 var stateCopy = require('state-copy')
 var pluck = require('plucker')
 
@@ -4067,7 +4122,7 @@ function copy (state) {
   stateCopy(isStateString ? pluck.apply(this, arguments) : state)
 }
 
-},{"plucker":89,"state-copy":98}],21:[function(require,module,exports){
+},{"plucker":90,"state-copy":99}],21:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var onChange = require('object-change-callsite')
 var nanologger = require('nanologger')
@@ -4109,7 +4164,7 @@ function debug (state, emitter, app, localEmitter) {
   })
 }
 
-},{"assert":11,"nanologger":74,"object-change-callsite":85}],22:[function(require,module,exports){
+},{"assert":11,"nanologger":75,"object-change-callsite":86}],22:[function(require,module,exports){
 module.exports = help
 
 function help () {
@@ -4220,7 +4275,7 @@ function log (state, emitter, app, localEmitter) {
 
 function noop () {}
 
-},{"clone":34,"nanologger":74,"nanoscheduler":82,"remove-array-items":27}],24:[function(require,module,exports){
+},{"clone":34,"nanologger":75,"nanoscheduler":83,"remove-array-items":27}],24:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var nanologger = require('nanologger')
 var Hooks = require('choo-hooks')
@@ -4305,7 +4360,7 @@ function logger (state, emitter, opts) {
   }
 }
 
-},{"choo-hooks":28,"nanologger":74,"nanoscheduler":82}],25:[function(require,module,exports){
+},{"choo-hooks":28,"nanologger":75,"nanoscheduler":83}],25:[function(require,module,exports){
 var onPerformance = require('on-performance')
 
 var BAR = '█'
@@ -4446,7 +4501,7 @@ function getMedian (args) {
 // Do nothing.
 function noop () {}
 
-},{"on-performance":87}],26:[function(require,module,exports){
+},{"on-performance":88}],26:[function(require,module,exports){
 var pretty = require('prettier-bytes')
 
 module.exports = storage
@@ -4489,7 +4544,7 @@ function fmt (num) {
 
 function noop () {}
 
-},{"prettier-bytes":90}],27:[function(require,module,exports){
+},{"prettier-bytes":91}],27:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4649,7 +4704,7 @@ ChooHooks.prototype._emitLoaded = function () {
   })
 }
 
-},{"assert":11,"nanoscheduler":82,"on-performance":87}],29:[function(require,module,exports){
+},{"assert":11,"nanoscheduler":83,"on-performance":88}],29:[function(require,module,exports){
 var assert = require('assert')
 var LRU = require('nanolru')
 
@@ -4692,7 +4747,7 @@ function newCall (Cls) {
   return new (Cls.bind.apply(Cls, arguments)) // eslint-disable-line
 }
 
-},{"assert":63,"nanolru":75}],30:[function(require,module,exports){
+},{"assert":63,"nanolru":76}],30:[function(require,module,exports){
 module.exports = require('nanocomponent')
 
 },{"nanocomponent":65}],31:[function(require,module,exports){
@@ -4982,7 +5037,7 @@ Choo.prototype._setCache = function (state) {
   }
 }
 
-},{"./component/cache":29,"assert":63,"document-ready":35,"nanobus":64,"nanohref":67,"nanomorph":76,"nanoquery":79,"nanoraf":80,"nanorouter":81,"nanotiming":83,"scroll-to-anchor":97}],33:[function(require,module,exports){
+},{"./component/cache":29,"assert":63,"document-ready":35,"nanobus":64,"nanohref":67,"nanomorph":77,"nanoquery":80,"nanoraf":81,"nanorouter":82,"nanotiming":84,"scroll-to-anchor":98}],33:[function(require,module,exports){
 /*! clipboard-copy. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* global DOMException */
 
@@ -5959,7 +6014,7 @@ class HydraRenderer {
 
 module.exports = HydraRenderer
 
-},{"./src/eval-sandbox.js":41,"./src/generator-factory.js":42,"./src/hydra-source.js":47,"./src/lib/array-utils.js":48,"./src/lib/audio.js":49,"./src/lib/mouse.js":52,"./src/lib/video-recorder.js":55,"./src/output.js":57,"raf-loop":92,"regl":94}],40:[function(require,module,exports){
+},{"./src/eval-sandbox.js":41,"./src/generator-factory.js":42,"./src/hydra-source.js":47,"./src/lib/array-utils.js":48,"./src/lib/audio.js":49,"./src/lib/mouse.js":52,"./src/lib/video-recorder.js":55,"./src/output.js":57,"raf-loop":93,"regl":95}],40:[function(require,module,exports){
 const Synth = require('./hydra-synth.js')
 //const ShaderGenerator = require('./shader-generator.js')
 
@@ -12848,7 +12903,7 @@ Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
   }
 }
 
-},{"assert":63,"nanotiming":83,"remove-array-items":95}],65:[function(require,module,exports){
+},{"assert":63,"nanotiming":84,"remove-array-items":96}],65:[function(require,module,exports){
 const document = require('global/document')
 const nanotiming = require('nanotiming')
 const morph = require('nanomorph')
@@ -13008,7 +13063,7 @@ Nanocomponent.prototype.update = function () {
   throw new Error('nanocomponent: update should be implemented!')
 }
 
-},{"assert":66,"global/document":37,"nanomorph":76,"nanotiming":83,"on-load":86}],66:[function(require,module,exports){
+},{"assert":66,"global/document":37,"nanomorph":77,"nanotiming":84,"on-load":87}],66:[function(require,module,exports){
 module.exports = assert
 
 class AssertionError extends Error {}
@@ -13345,7 +13400,22 @@ module.exports = function (document) {
   return exports
 }
 
-},{"./append-child":68,"./bool-props":69,"./direct-props":71,"./svg-tags":73,"hyperx":59}],73:[function(require,module,exports){
+},{"./append-child":68,"./bool-props":69,"./direct-props":71,"./svg-tags":74,"hyperx":59}],73:[function(require,module,exports){
+'use strict'
+
+function nanohtmlRawBrowser (tag) {
+  var el = document.createElement('div')
+  el.innerHTML = tag
+  return toArray(el.childNodes)
+}
+
+function toArray (arr) {
+  return Array.isArray(arr) ? arr : [].slice.call(arr)
+}
+
+module.exports = nanohtmlRawBrowser
+
+},{}],74:[function(require,module,exports){
 'use strict'
 
 module.exports = [
@@ -13365,7 +13435,7 @@ module.exports = [
   'tspan', 'use', 'view', 'vkern'
 ]
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 var assert = require('assert')
 
 var emojis = {
@@ -13530,7 +13600,7 @@ function pad (str) {
   return str.length !== 2 ? 0 + str : str
 }
 
-},{"assert":11}],75:[function(require,module,exports){
+},{"assert":11}],76:[function(require,module,exports){
 module.exports = LRU
 
 function LRU (opts) {
@@ -13668,7 +13738,7 @@ LRU.prototype.evict = function () {
   this.remove(this.tail)
 }
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 var assert = require('nanoassert')
 var morph = require('./lib/morph')
 
@@ -13833,7 +13903,7 @@ function same (a, b) {
   return false
 }
 
-},{"./lib/morph":78,"nanoassert":63}],77:[function(require,module,exports){
+},{"./lib/morph":79,"nanoassert":63}],78:[function(require,module,exports){
 module.exports = [
   // attribute events (can be set with attributes)
   'onclick',
@@ -13880,7 +13950,7 @@ module.exports = [
   'onfocusout'
 ]
 
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 var events = require('./events')
 var eventsLength = events.length
 
@@ -14055,7 +14125,7 @@ function updateAttribute (newNode, oldNode, name) {
   }
 }
 
-},{"./events":77}],79:[function(require,module,exports){
+},{"./events":78}],80:[function(require,module,exports){
 var reg = /([^?=&]+)(=([^&]*))?/g
 var assert = require('assert')
 
@@ -14079,7 +14149,7 @@ function qs (url) {
   return obj
 }
 
-},{"assert":63}],80:[function(require,module,exports){
+},{"assert":63}],81:[function(require,module,exports){
 'use strict'
 
 var assert = require('assert')
@@ -14116,7 +14186,7 @@ function nanoraf (render, raf) {
   }
 }
 
-},{"assert":63}],81:[function(require,module,exports){
+},{"assert":63}],82:[function(require,module,exports){
 var assert = require('assert')
 var wayfarer = require('wayfarer')
 
@@ -14172,7 +14242,7 @@ function pathname (routename, isElectron) {
   return decodeURI(routename.replace(suffix, '').replace(normalize, '/'))
 }
 
-},{"assert":63,"wayfarer":100}],82:[function(require,module,exports){
+},{"assert":63,"wayfarer":101}],83:[function(require,module,exports){
 var assert = require('assert')
 
 var hasWindow = typeof window !== 'undefined'
@@ -14229,7 +14299,7 @@ NanoScheduler.prototype.setTimeout = function (cb) {
 
 module.exports = createScheduler
 
-},{"assert":63}],83:[function(require,module,exports){
+},{"assert":63}],84:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var assert = require('assert')
 
@@ -14279,7 +14349,7 @@ function noop (cb) {
   }
 }
 
-},{"assert":63,"nanoscheduler":82}],84:[function(require,module,exports){
+},{"assert":63,"nanoscheduler":83}],85:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -14371,7 +14441,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 var assert = require('assert')
 
 module.exports = objectChangeCallsite
@@ -14408,7 +14478,7 @@ function strip (str) {
   return '\n' + arr.join('\n')
 }
 
-},{"assert":11}],86:[function(require,module,exports){
+},{"assert":11}],87:[function(require,module,exports){
 /* global MutationObserver */
 var document = require('global/document')
 var window = require('global/window')
@@ -14505,7 +14575,7 @@ function eachMutation (nodes, fn) {
   }
 }
 
-},{"global/document":37,"global/window":38}],87:[function(require,module,exports){
+},{"global/document":37,"global/window":38}],88:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var assert = require('assert')
 
@@ -14565,7 +14635,7 @@ function onPerformance (cb) {
   }
 }
 
-},{"assert":63,"nanoscheduler":82}],88:[function(require,module,exports){
+},{"assert":63,"nanoscheduler":83}],89:[function(require,module,exports){
 (function (process){(function (){
 // Generated by CoffeeScript 1.12.2
 (function() {
@@ -14605,7 +14675,7 @@ function onPerformance (cb) {
 
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":91}],89:[function(require,module,exports){
+},{"_process":92}],90:[function(require,module,exports){
 module.exports = plucker
 
 function plucker(path, object) {
@@ -14642,7 +14712,7 @@ function pluck(path) {
   }
 }
 
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 module.exports = prettierBytes
 
 function prettierBytes (num) {
@@ -14674,7 +14744,7 @@ function prettierBytes (num) {
   }
 }
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -14860,7 +14930,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 var inherits = require('inherits')
 var EventEmitter = require('events').EventEmitter
 var now = require('right-now')
@@ -14905,7 +14975,7 @@ Engine.prototype.tick = function() {
     this.emit('tick', dt)
     this.last = time
 }
-},{"events":17,"inherits":61,"raf":93,"right-now":96}],93:[function(require,module,exports){
+},{"events":17,"inherits":61,"raf":94,"right-now":97}],94:[function(require,module,exports){
 (function (global){(function (){
 var now = require('performance-now')
   , root = typeof window === 'undefined' ? global : window
@@ -14984,7 +15054,7 @@ module.exports.polyfill = function(object) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"performance-now":88}],94:[function(require,module,exports){
+},{"performance-now":89}],95:[function(require,module,exports){
 (function(U,X){"object"===typeof exports&&"undefined"!==typeof module?module.exports=X():"function"===typeof define&&define.amd?define(X):U.createREGL=X()})(this,function(){function U(a,b){this.id=Eb++;this.type=a;this.data=b}function X(a){if(0===a.length)return[];var b=a.charAt(0),c=a.charAt(a.length-1);if(1<a.length&&b===c&&('"'===b||"'"===b))return['"'+a.substr(1,a.length-2).replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'"'];if(b=/\[(false|true|null|\d+|'[^']*'|"[^"]*")\]/.exec(a))return X(a.substr(0,
 b.index)).concat(X(b[1])).concat(X(a.substr(b.index+b[0].length)));b=a.split(".");if(1===b.length)return['"'+a.replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'"'];a=[];for(c=0;c<b.length;++c)a=a.concat(X(b[c]));return a}function cb(a){return"["+X(a).join("][")+"]"}function db(a,b){if("function"===typeof a)return new U(0,a);if("number"===typeof a||"boolean"===typeof a)return new U(5,a);if(Array.isArray(a))return new U(6,a.map(function(a,e){return db(a,b+"["+e+"]")}));if(a instanceof U)return a}function Fb(){var a=
 {"":0},b=[""];return{id:function(c){var e=a[c];if(e)return e;e=a[c]=b.length;b.push(c);return e},str:function(a){return b[a]}}}function Gb(a,b,c){function e(){var b=window.innerWidth,e=window.innerHeight;a!==document.body&&(e=a.getBoundingClientRect(),b=e.right-e.left,e=e.bottom-e.top);f.width=c*b;f.height=c*e;A(f.style,{width:b+"px",height:e+"px"})}var f=document.createElement("canvas");A(f.style,{border:0,margin:0,padding:0,top:0,left:0});a.appendChild(f);a===document.body&&(f.style.position="absolute",
@@ -15150,7 +15220,7 @@ H=Yb(l,m),O=Kb(l,r,a,function(a){return J.destroyBuffer(a)}),J=Sb(l,m,H,r,O),M=L
 vao:J.createVAO,attributes:h,frame:u,on:function(a,b){var c;switch(a){case "frame":return u(b);case "lost":c=S;break;case "restore":c=T;break;case "destroy":c=U}c.push(b);return{cancel:function(){for(var a=0;a<c.length;++a)if(c[a]===b){c[a]=c[c.length-1];c.pop();break}}}},limits:H,hasExtension:function(a){return 0<=H.extensions.indexOf(a.toLowerCase())},read:q,destroy:function(){C.length=0;e();N&&(N.removeEventListener("webglcontextlost",f),N.removeEventListener("webglcontextrestored",d));D.clear();
 V.clear();L.clear();y.clear();M.clear();O.clear();J.clear();z&&z.clear();U.forEach(function(a){a()})},_gl:l,_refresh:k,poll:function(){w();z&&z.update()},now:v,stats:r});a.onDone(null,h);return h}});
 
-},{}],95:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 'use strict'
 
 /**
@@ -15179,7 +15249,7 @@ module.exports = function removeItems (arr, startIdx, removeCount) {
   arr.length = len
 }
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 (function (global){(function (){
 module.exports =
   global.performance &&
@@ -15190,7 +15260,7 @@ module.exports =
   }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 module.exports = scrollToAnchor
 
 function scrollToAnchor (anchor, options) {
@@ -15202,7 +15272,7 @@ function scrollToAnchor (anchor, options) {
   }
 }
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 var fastSafeStringify = require('fast-safe-stringify')
 var copy = require('clipboard-copy')
 
@@ -15219,7 +15289,7 @@ function stateCopy (obj) {
 
 module.exports = stateCopy
 
-},{"clipboard-copy":33,"fast-safe-stringify":36}],99:[function(require,module,exports){
+},{"clipboard-copy":33,"fast-safe-stringify":36}],100:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var assert = require('assert')
 
@@ -15257,7 +15327,7 @@ function getAllRoutes (router) {
   return transform(tree)
 }
 
-},{"assert":63}],100:[function(require,module,exports){
+},{"assert":63}],101:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var assert = require('assert')
 var trie = require('./trie')
@@ -15332,7 +15402,7 @@ function Wayfarer (dft) {
   }
 }
 
-},{"./trie":101,"assert":63}],101:[function(require,module,exports){
+},{"./trie":102,"assert":63}],102:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var assert = require('assert')
 

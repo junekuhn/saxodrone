@@ -6,20 +6,35 @@ module.exports = function (state, emit) {
 
   return html`
   <div>
+    <h1>CONTACT</h1>
       <form id="contact-form" action="https://formspree.io/f/xqkwendw" method="POST">
-        <label for="yourname">
-          Your Name
-        </label>
-        <input id="yourname" name="yourname"
-          type="text"
-          required
-          pattern=".{1,64}"
-          title="Must be between 1 and 64 characters long."
-        >
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" cols="20" placeholder="" required>What's Up?</textarea>
-        <button id="contact-button" type="submit" name="contact-button">Submit</button>
-        
+        <div class="form-div">
+          <label for="yourname">
+            Your Name
+          </label>
+          <input id="yourname" name="yourname"
+            type="text"
+            required
+            pattern=".{1,64}"
+            title="Must be between 1 and 64 characters long."
+          >
+        </div>
+        <div class="form-div">
+          <label for="yourname">
+            Your Email
+          </label>
+          <input id="youremail" name="youremail"
+            type="text"
+            required
+          >
+        </div>
+        <div class="form-div">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" cols="20" placeholder="" required>What's Up?</textarea>
+        </div>
+        <div class="form-div">              
+          <button id="contact-button" type="submit" name="contact-button">Submit</button>
+        </div>
       </form>
   </div>
   `
