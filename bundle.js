@@ -283,6 +283,7 @@ var main = require("./main.js");
 var assert = require("assert");
 var Hydra = require('./hydra-canvas.js');
 // const { emit } = require("process");
+// const { emit } = require("process");
 // initialize choo
 var app = choo({ hash: true });
 
@@ -311,6 +312,7 @@ app.use((state, emitter) => {
 
 app.use((state, emitter) => {
   state.splash = true;
+  state.fadeOut = "";
 
   emitter.on('DOMContentLoaded', () => {
     emitter.on("skip", () => {
@@ -320,14 +322,21 @@ app.use((state, emitter) => {
 
     emitter.on("play", () => {
       const drone = document.getElementById("drone");
-      console.log(drone);
-      drone.addEventListener("canplay", e => {
-                console.log("canplay")
-        drone.play();
 
-      })
-      // emitter.emit('render')
-    })
+      //trigger fade out
+      state.fadeOut = "fadeout";
+
+      //trigger hydra code
+
+      console.log(drone);
+      drone.play();
+      drone.addEventListener("ended", e => {
+        console.log("ended")
+        state.splash = false;
+        emitter.emit("render");
+      });
+      emitter.emit('render')
+    });
 
 
 
@@ -460,19 +469,13 @@ const home = function (state, emit) {
 const splash = function (state, emit) {
 
    return html`
-   <div id="splash-container">
+   <div id="splash-container" class=${state.fadeOut}>
       <div id="play-container">
          <button id="play" onclick=${() => emit("play")}>Play</button>
          <div style="display: block"></div>
          <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
-
       </div>
       <button id="skip" onclick=${() => emit("skip")}>Skip</button>
-       <audio id="drone"  crossorigin="anonymous" >
-          <source src="assets/demo1.mp3" type="audio/mp3">
-          <source src="assets/demo1.wav" type="audio/wav">
-          no support
-       </audio>
    </div>
    `
 }

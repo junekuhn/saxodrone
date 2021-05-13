@@ -5,6 +5,7 @@ var main = require("./main.js");
 var assert = require("assert");
 var Hydra = require('./hydra-canvas.js');
 // const { emit } = require("process");
+// const { emit } = require("process");
 // initialize choo
 var app = choo({ hash: true });
 
@@ -33,6 +34,7 @@ app.use((state, emitter) => {
 
 app.use((state, emitter) => {
   state.splash = true;
+  state.fadeOut = "";
 
   emitter.on('DOMContentLoaded', () => {
     emitter.on("skip", () => {
@@ -42,14 +44,21 @@ app.use((state, emitter) => {
 
     emitter.on("play", () => {
       const drone = document.getElementById("drone");
-      console.log(drone);
-      drone.addEventListener("canplay", e => {
-                console.log("canplay")
-        drone.play();
 
-      })
-      // emitter.emit('render')
-    })
+      //trigger fade out
+      state.fadeOut = "fadeout";
+
+      //trigger hydra code
+
+      console.log(drone);
+      drone.play();
+      drone.addEventListener("ended", e => {
+        console.log("ended")
+        state.splash = false;
+        emitter.emit("render");
+      });
+      emitter.emit('render')
+    });
 
 
 

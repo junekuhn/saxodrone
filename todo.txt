@@ -1,7 +1,5 @@
-splash
-   swap out hydra code through html events
-   update assign css for each state
-   app.model or app.use
+write some hydra code for the animation
+trigger the hydra code on play
 
 about
    format paragraph

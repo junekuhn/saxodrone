@@ -94,6 +94,7 @@ footer {
 #splash-container {
    width: 100%;
    height: 100%;
+   /* changing this with state */
    display: flex;
    margin-top: 6%;
    flex-direction: column;
@@ -150,6 +151,46 @@ header {
 
    to {
       transform: rotate(360deg);
+   }
+}
+
+.fadeout {
+      animation: fadeOut 3s ease;
+      animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+   0% {
+      display: none;
+      opacity: 1;
+   }
+
+   99% {
+      display: flex;
+      opacity: 0;
+   }
+
+   100% {
+      display: none;
+      opacity: 0;
+   }
+}
+
+
+@keyframes fadeIn {
+   0% {
+      display: none;
+      opacity: 0;
+   }
+
+   1% {
+      display: block;
+      opacity: 0;
+   }
+
+   100% {
+      display: block;
+      opacity: 1;
    }
 }
 
