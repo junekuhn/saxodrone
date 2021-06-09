@@ -65,11 +65,13 @@ const splash = function (state, emit) {
    return html`
    <div id="splash-container" class=${state.fadeOut}>
       <div id="play-container">
-         <button id="play" onclick=${() => emit("play")}>Play</button>
-         <div style="display: block"></div>
-         <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+         <button id="play" class="linktree" onclick=${() => emit("play")}>Enter</button>
+          <button id="skip" class="linktree" onclick=${() => emit("skip")}>Skip</button>
+          <button class="linktree"><a href="https://saxodrone.bandcamp.com">Bandcamp Demos</a></button>
+          <button class="linktree"><a href="https://instagram.com/saxodr_one">Instagram</a></button>
+          <button class="linktree"><a href="https://youtu.be/2bUkst1198g">Live Video</a></button>
       </div>
-      <button id="skip" onclick=${() => emit("skip")}>Skip</button>
+     
    </div>
    `
 }

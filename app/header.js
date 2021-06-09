@@ -37,6 +37,7 @@ module.exports = function (state, emit) {
                   <a href="/contact">Contact</a>
                   <a href="/listen">Listen</a>
                   <a href="/watch">Watch</a>
+                  <a href="https://saxodr.one/epk.pdf">EPK (PDF)</a>
                   <a id="fund" href="https://www.buymeacoffee.com/justinkuhn" target="_blank">${raw('Fund -&gt;')}</a>
                </div>
                

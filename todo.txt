@@ -1,26 +1,28 @@
 write some hydra code for the animation
 trigger the hydra code on play
+timings
 
-about
-   format paragraph
-   fugure out what to do image wise 
+buymeacoffee site 
 
+bandcamp demos
+
+set lower resolution?
+
+update sax image
+
+make hamburger bigger
+
+overlay animation consistency
+
+linktree mock up
+   welcome / play
+   bandcamp
+   youtube
+   instagram
+   justinkuhnmedia
+   skip to home
 
 nav
-   about
-      bio
-      purpose
    blog (tbd)
    shows (tbd)
-   contact
-      form
-   listen
-      bandcamp embeds
-   watch
-      youtube embeds
    store (tbd)
-   fund (this website/saxodrone/interactive stuff)
-      what my plans are
-      what you get for contributing
-      maybe a form or a poll to give input
-      paypal/venmo/buymeacoffee

@@ -11,14 +11,13 @@ module.exports = class Map extends Component {
 
   load(element) {
     console.log("loading", element, this.canvas);
-    const isMobile = this.state.isMobile;
-    if (isMobile) {
-      console.log("is mobile")
-      document
-        .getElementById("hydra-holder").style.visibility = "hidden";
-    }
-    // create a new hydra-synth instance
-    if (isMobile == false) {
+    // const isMobile = this.state.isMobile;
+    // if (isMobile) {
+    //   console.log("is mobile")
+    //   document
+    //     .getElementById("hydra-holder").style.visibility = "hidden";
+    // }
+
       const hydraCanvas = this.canvas;
       hydraCanvas.width = window.innerWidth;
       hydraCanvas.height = window.innerHeight;
@@ -31,7 +30,7 @@ module.exports = class Map extends Component {
       if (this.state.hydra == undefined) {
         var hydra = new Hydra({
           canvas: this.canvas,
-          detectAudio: true
+          detectAudio: false
           //width: 400,
           //height: 400
         });
@@ -59,15 +58,12 @@ module.exports = class Map extends Component {
         
           src(o0)
             .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
-              .mask(shape(4, 0.25, 0.1).scale(5, 0.1).scrollX(0.5)))
-            .modulateScale(o1, [0.003, 0.19].smooth(), 0.99)
-            .modulate(noise(), 0.001)
+              .mask(shape(4, 0.25, 0.1).scale(5, 0.2).scrollX(0.5)))
+            .modulateScale(o1, [0.23, 0.29].smooth().fast(0.8), 0.99)
+            .modulate(noise(), 0.03)
             .out(o0)
           break;
       }
-
-      // //window.hasRun = true
-    }
 
   }
 

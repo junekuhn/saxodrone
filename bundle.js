@@ -159,6 +159,7 @@ module.exports = function (state, emit) {
                   <a href="/contact">Contact</a>
                   <a href="/listen">Listen</a>
                   <a href="/watch">Watch</a>
+                  <a href="https://saxodr.one/epk.pdf">EPK (PDF)</a>
                   <a id="fund" href="https://www.buymeacoffee.com/justinkuhn" target="_blank">${raw('Fund -&gt;')}</a>
                </div>
                
@@ -185,14 +186,13 @@ module.exports = class Map extends Component {
 
   load(element) {
     console.log("loading", element, this.canvas);
-    const isMobile = this.state.isMobile;
-    if (isMobile) {
-      console.log("is mobile")
-      document
-        .getElementById("hydra-holder").style.visibility = "hidden";
-    }
-    // create a new hydra-synth instance
-    if (isMobile == false) {
+    // const isMobile = this.state.isMobile;
+    // if (isMobile) {
+    //   console.log("is mobile")
+    //   document
+    //     .getElementById("hydra-holder").style.visibility = "hidden";
+    // }
+
       const hydraCanvas = this.canvas;
       hydraCanvas.width = window.innerWidth;
       hydraCanvas.height = window.innerHeight;
@@ -205,7 +205,7 @@ module.exports = class Map extends Component {
       if (this.state.hydra == undefined) {
         var hydra = new Hydra({
           canvas: this.canvas,
-          detectAudio: true
+          detectAudio: false
           //width: 400,
           //height: 400
         });
@@ -233,15 +233,12 @@ module.exports = class Map extends Component {
         
           src(o0)
             .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
-              .mask(shape(4, 0.25, 0.1).scale(5, 0.1).scrollX(0.5)))
-            .modulateScale(o1, [0.003, 0.19].smooth(), 0.99)
-            .modulate(noise(), 0.001)
+              .mask(shape(4, 0.25, 0.1).scale(5, 0.2).scrollX(0.5)))
+            .modulateScale(o1, [0.23, 0.29].smooth().fast(0.8), 0.99)
+            .modulate(noise(), 0.03)
             .out(o0)
           break;
       }
-
-      // //window.hasRun = true
-    }
 
   }
 
@@ -395,10 +392,22 @@ module.exports = function (state, emit) {
    return html`
       <div>
       <section class="main-content">
-         <h1>Previous Projects</h1>
-         <p>In a previous life, I played in a jazz-metal band called Megachrome.</p>
-         <div class="iframe-container">
-             <iframe style="border: 0; width: 350px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=516790313/size=large/bgcol=ffffff/linkcol=e99708/transparent=true/" seamless><a href="https://megachrome.bandcamp.com/album/brackish-ep">Brackish EP by Megachrome</a></iframe>
+         <div>
+            <h1>Bandcamp Demos</h1>
+            <div>
+               <iframe scrolling="no" style="border: 0;width: 100%;height: 50px;" src="https://bandcamp.com/band_follow_button_deluxe/377006614"></iframe>
+            </div>
+            <div class="iframe-container">
+               <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=346736679/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://saxodrone.bandcamp.com/album/demonstrations">Demonstrations by saxodrone</a></iframe>
+            
+            </div>
+         </div>
+         <div>
+            <h1>Previous Projects</h1>
+            <p>In a previous life, I played in a jazz-metal band called Megachrome.</p>
+            <div class="iframe-container">
+               <iframe style="border: 0; width: 350px; height: 621px;" src="https://bandcamp.com/EmbeddedPlayer/album=516790313/size=large/bgcol=ffffff/linkcol=e99708/transparent=true/" seamless><a href="https://megachrome.bandcamp.com/album/brackish-ep">Brackish EP by Megachrome</a></iframe>
+            </div>
          </div>
       </section>
       </div>`
@@ -471,11 +480,13 @@ const splash = function (state, emit) {
    return html`
    <div id="splash-container" class=${state.fadeOut}>
       <div id="play-container">
-         <button id="play" onclick=${() => emit("play")}>Play</button>
-         <div style="display: block"></div>
-         <img id="saxBell" src="assets/bell.png" alt="brown tenor saxophone">
+         <button id="play" class="linktree" onclick=${() => emit("play")}>Enter</button>
+          <button id="skip" class="linktree" onclick=${() => emit("skip")}>Skip</button>
+          <button class="linktree"><a href="https://saxodrone.bandcamp.com">Bandcamp Demos</a></button>
+          <button class="linktree"><a href="https://instagram.com/saxodr_one">Instagram</a></button>
+          <button class="linktree"><a href="https://youtu.be/2bUkst1198g">Live Video</a></button>
       </div>
-      <button id="skip" onclick=${() => emit("skip")}>Skip</button>
+     
    </div>
    `
 }
