@@ -71,7 +71,6 @@ const splash = function (state, emit) {
           <button class="linktree"><a href="https://instagram.com/saxodr_one">Instagram</a></button>
           <button class="linktree"><a href="https://youtu.be/2bUkst1198g">Live Video</a></button>
       </div>
-     
    </div>
    `
 }

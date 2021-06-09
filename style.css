@@ -96,10 +96,9 @@ footer {
    height: 100%;
    /* changing this with state */
    display: flex;
+
    margin-top: 0%;
-   flex-direction: column;
-   justify-content: flex-start;
-   align-items: center;
+   justify-content: center;
    /* padding-top: 20px; */
    position: absolute;
 }
@@ -161,17 +160,17 @@ header {
 
 @keyframes fadeOut {
    0% {
-      display: none;
+      margin-top:0px;
       opacity: 1;
    }
 
    99% {
-      display: flex;
+      margin-top:0px;
       opacity: 0;
    }
 
    100% {
-      display: none;
+      margin-top:-10000px;
       opacity: 0;
    }
 }
@@ -234,6 +233,7 @@ header {
    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
       0 6px 20px 0 rgba(0, 0, 0, 0.19);
    order: 1;
+   border-radius: 10px;
 }
 
 .linktree:hover {
