@@ -9,9 +9,13 @@ module.exports = function (state, emit) {
       <section class="about">
          <h1>ABOUT</h1>
          <!-- <img src="assets/closeup.png" alt="close-up on Cannonball tenor sax"> -->
+         <p>Saxodrone is a live-looping solo act of electronic drone, spoken-word poetry, and free improvisation.  
+         Using an array of  guitar pedals and a MiMU Glove, 
+         the saxophone is transformed into an ensemble of evolving energies.
          <p>This is the music that I play on a calm, Sunday afternoon, outside on my deck. The wind's blowing faintly, and every note echos between the trees. It's the music where I lose myself on a Wednesday evening, when no one's home and I can crank my Peavey to a deafening level. Drone loops have a spriritual pull for me, one that draws me and holds my attention until I awake.</p>
-         <br>
-         <p>The saxophone, like any wind instrument, is controlled by the breath.  I used to meditate all the time, focusing on my breath to center my attention from stress, anxiety, and frustration.  Playing Saxodrone feels similar, with every breath driving the flow of music.  </p>
+         <p>The saxophone, like any wind instrument, is controlled by the breath.  When I meditate, I
+         focus on my breath to center my attention from stress, anxiety, and frustration.  
+         Playing Saxodrone feels similar, with every breath driving the flow of music.  </p>
       </section>
       </div>`
 }
@@ -25,6 +29,9 @@ module.exports = function (state, emit) {
   return html`
   <div>
     <h1>CONTACT</h1>
+    <section class="email">
+      <p>saxodrone[at]proton.me</p>
+    </section>
       <form id="contact-form" action="https://formspree.io/f/xqkwendw" method="POST">
         <div class="form-div">
           <label for="yourname">
@@ -233,7 +240,7 @@ module.exports = class Map extends Component {
         
           src(o0)
             .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
-              .mask(shape(4, 0.25, 0.1).scale(5, 0.2).scrollX(0.5)))
+              .mask(shape(4, 0.25, 0.1).scale(5, 0.2).scrollX(0)))
             .modulateScale(o1, [0.23, 0.29].smooth().fast(0.8), 0.99)
             .modulate(noise(), 0.03)
             .out(o0)
@@ -394,9 +401,7 @@ module.exports = function (state, emit) {
       <section class="main-content">
          <div>
             <h1>Bandcamp Demos</h1>
-            <div>
-               <iframe scrolling="no" style="border: 0;width: 100%;height: 50px;" src="https://bandcamp.com/band_follow_button_deluxe/377006614"></iframe>
-            </div>
+
             <div class="iframe-container">
                <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=346736679/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://saxodrone.bandcamp.com/album/demonstrations">Demonstrations by saxodrone</a></iframe>
             
@@ -480,13 +485,12 @@ const splash = function (state, emit) {
    return html`
    <div id="splash-container" class=${state.fadeOut}>
       <div id="play-container">
-         <button id="play" class="linktree" onclick=${() => emit("play")}>Enter</button>
-          <button id="skip" class="linktree" onclick=${() => emit("skip")}>Skip</button>
+         <button id="play" class="linktree" onclick=${() => emit("play")}>Enter (Play Audio)</button>
+          <button id="skip" class="linktree" onclick=${() => emit("skip")}>Skip To Home</button>
           <button class="linktree"><a href="https://saxodrone.bandcamp.com">Bandcamp Demos</a></button>
-          <button class="linktree"><a href="https://instagram.com/saxodr_one">Instagram</a></button>
-          <button class="linktree"><a href="https://youtu.be/2bUkst1198g">Live Video</a></button>
+          <button class="linktree"><a href="https://instagram.com/saxodr.one">Instagram</a></button>
+          <button class="linktree"><a href="https://www.youtube.com/watch?v=R8YnwFOsjxg">Live Video</a></button>
       </div>
-     
    </div>
    `
 }
@@ -499,12 +503,13 @@ const noSplash = function (state, emit) {
          <h1>SAXODRONE</h1>
          <img id="horn" src="/assets/DSC00038.png">
          <h3>
-         Based in Raleigh, North Carolina
+         Based in London, UK
          </h3>
       </div>
    </div>
    `;
 };
+
 },{"./about":1,"./contact":2,"./footer":3,"./fund":4,"./header":5,"./hydra-canvas.js":6,"./listen":8,"./watch":10,"choo/html":31}],10:[function(require,module,exports){
 html = require("choo/html")
 
@@ -515,7 +520,7 @@ module.exports = function (state, emit) {
       <section class=main-content>
          <h1>Watch</h1>
          <div class="iframe-container">
-            <iframe width="700" height="400" src="https://www.youtube.com/embed/nz_wTz62b2Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="700" height="400" src="https://www.youtube.com/embed/R8YnwFOsjxg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
          </div>
       </section>
       </div>`

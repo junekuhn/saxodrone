@@ -12,11 +12,11 @@ html, body {
 }
 
 h3 {
-   font-size: 23px;
+   font-size: 25px;
 }
 
 p {
-   font-size: 18px;
+   font-size: 21px;
 }
 
 nav {
@@ -28,6 +28,10 @@ nav {
 
 form {
    display: block;
+}
+
+.email {
+   text-align: center;
 }
 
 .form-div {
@@ -102,6 +106,7 @@ footer {
    /* padding-top: 20px; */
    position: absolute;
 }
+
 
 .about {
    padding-left: 20%;
@@ -195,7 +200,7 @@ header {
 
 #play-container {
    display: flex;
-   width: 40%;
+   width: 30%;
    height: 100%;
    flex-direction: column;
    align-items:stretch;
@@ -227,7 +232,7 @@ header {
 .linktree {
    background-color: #111111;
    color: white;
-   padding: 5px;
+   padding: 9px;
    font-size: 35px;
    text-decoration: none;
    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),

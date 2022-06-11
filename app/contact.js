@@ -7,6 +7,9 @@ module.exports = function (state, emit) {
   return html`
   <div>
     <h1>CONTACT</h1>
+    <section class="email">
+      <p>saxodrone[at]proton.me</p>
+    </section>
       <form id="contact-form" action="https://formspree.io/f/xqkwendw" method="POST">
         <div class="form-div">
           <label for="yourname">

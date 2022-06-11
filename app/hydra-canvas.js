@@ -58,7 +58,7 @@ module.exports = class Map extends Component {
         
           src(o0)
             .layer(src(o1).modulateScrollX(osc(40, 0.01, 0.5), 0.5, -0.6)
-              .mask(shape(4, 0.25, 0.1).scale(5, 0.2).scrollX(0.5)))
+              .mask(shape(4, 0.25, 0.1).scale(5, 0.2).scrollX(0)))
             .modulateScale(o1, [0.23, 0.29].smooth().fast(0.8), 0.99)
             .modulate(noise(), 0.03)
             .out(o0)

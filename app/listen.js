@@ -7,9 +7,7 @@ module.exports = function (state, emit) {
       <section class="main-content">
          <div>
             <h1>Bandcamp Demos</h1>
-            <div>
-               <iframe scrolling="no" style="border: 0;width: 100%;height: 50px;" src="https://bandcamp.com/band_follow_button_deluxe/377006614"></iframe>
-            </div>
+
             <div class="iframe-container">
                <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=346736679/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://saxodrone.bandcamp.com/album/demonstrations">Demonstrations by saxodrone</a></iframe>
             
