@@ -67,7 +67,7 @@ const splash = function (state, emit) {
       <div id="play-container">
          <button id="play" class="linktree" onclick=${() => emit("play")}>Enter (Play Audio)</button>
           <button id="skip" class="linktree" onclick=${() => emit("skip")}>Skip To Home</button>
-          <button class="linktree"><a href="https://saxodrone.bandcamp.com">Bandcamp Demos</a></button>
+          <button class="linktree"><a href="https://saxodrone.bandcamp.com/album/live-at-spanners-bit-crush-3">Live Recording (Bandcamp)</a></button>
           <button class="linktree"><a href="https://instagram.com/saxodr.one">Instagram</a></button>
           <button class="linktree"><a href="https://www.youtube.com/watch?v=R8YnwFOsjxg">Live Video</a></button>
       </div>
